@@ -78,28 +78,27 @@ function generateTypescript(
     lines.push(`// Contract: ${name}`);
   }
   lines.push(`// Generated at: ${new Date().toISOString()}`);
-  lines.push(`export namespace ${name} {`);
-  const filtered = manifest.abi.methods.filter(
+  // Export API interface for class implementation
+  const filteredApi = manifest.abi.methods.filter(
     (mm) => mm.name !== "_initialize"
   );
-  const groups = new Map<string, N3ManifestMethod[]>();
-  for (const m of filtered) {
-    const arr = groups.get(m.name) ?? [];
+  const apiGroups = new Map<string, N3ManifestMethod[]>();
+  for (const m of filteredApi) {
+    const arr = apiGroups.get(m.name) ?? [];
     arr.push(m);
-    groups.set(m.name, arr);
+    apiGroups.set(m.name, arr);
   }
-  for (const [methodName, variants] of groups) {
+  lines.push(`export interface ${name}API {`);
+  for (const [methodName, variants] of apiGroups) {
     for (const m of variants) {
       const params = m.parameters
         .map((p) => `${p.name}: ${toTsType(p.type)}`)
         .join(", ");
       const ret = toTsType(m.returntype);
-      lines.push(
-        `  export function ${methodName}(${params}): Promise<${ret}>;`
-      );
+      lines.push(`  ${methodName}(${params}): Promise<${ret}>;`);
     }
   }
-  lines.push("}");
+  lines.push(`}`);
   return lines.join("\n");
 }
 
@@ -119,6 +118,8 @@ function generateImplementation(
   }
   lines.push(`// Generated at: ${new Date().toISOString()}`);
   lines.push("");
+  lines.push(`import type { ${name}API } from "./${name}";`);
+  lines.push("");
   lines.push(`export interface N3Invoker {`);
   lines.push(
     `  invoke<T>(contractHash: string, method: string, args: unknown[]): Promise<T>;`
@@ -128,7 +129,7 @@ function generateImplementation(
   );
   lines.push(`}`);
   lines.push("");
-  lines.push(`export class ${className} {`);
+  lines.push(`export class ${className} implements ${name}API {`);
   lines.push(`  private readonly invoker: N3Invoker;`);
   if (hasStaticHash) {
     lines.push(`  private static readonly CONTRACT_HASH = "${meta?.hash}";`);

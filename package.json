@@ -1,9 +1,18 @@
 {
   "name": "@smartargs/n3-typegen",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "type": "module",
   "description": "Generate typed NEO N3 contract bindings",
+  "author": "smartargs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smartargs/n3-typegen"
+  },
+  "homepage": "https://github.com/smartargs/n3-typegen",
+  "bugs": {
+    "url": "https://github.com/smartargs/n3-typegen/issues"
+  },
   "license": "MIT",
   "bin": {
     "n3-typegen": "./dist/cli.js"
