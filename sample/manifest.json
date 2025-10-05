@@ -1,0 +1,210 @@
+{
+    "name" : "FlowExecutorContract",
+    "groups" : [ ],
+    "features" : { },
+    "supportedstandards" : [ ],
+    "abi" : {
+      "methods" : [ {
+        "name" : "onNEP17Payment",
+        "parameters" : [ {
+          "name" : "from",
+          "type" : "Hash160"
+        }, {
+          "name" : "amount",
+          "type" : "Integer"
+        }, {
+          "name" : "unused",
+          "type" : "Any"
+        } ],
+        "offset" : 0,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "createFlow",
+        "parameters" : [ {
+          "name" : "contract",
+          "type" : "Hash160"
+        }, {
+          "name" : "method",
+          "type" : "String"
+        }, {
+          "name" : "args",
+          "type" : "Array"
+        }, {
+          "name" : "reward",
+          "type" : "Integer"
+        }, {
+          "name" : "validFromBlock",
+          "type" : "Integer"
+        }, {
+          "name" : "validUntilBlock",
+          "type" : "Integer"
+        } ],
+        "offset" : 156,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "executeFlow",
+        "parameters" : [ {
+          "name" : "owner",
+          "type" : "Hash160"
+        }, {
+          "name" : "id",
+          "type" : "Integer"
+        } ],
+        "offset" : 513,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "withdraw",
+        "parameters" : [ {
+          "name" : "amount",
+          "type" : "Integer"
+        } ],
+        "offset" : 1286,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "pauseFlow",
+        "parameters" : [ {
+          "name" : "id",
+          "type" : "Integer"
+        } ],
+        "offset" : 1614,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "resumeFlow",
+        "parameters" : [ {
+          "name" : "id",
+          "type" : "Integer"
+        } ],
+        "offset" : 1958,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "deleteFlow",
+        "parameters" : [ {
+          "name" : "id",
+          "type" : "Integer"
+        } ],
+        "offset" : 2306,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "update",
+        "parameters" : [ {
+          "name" : "nefFile",
+          "type" : "ByteArray"
+        }, {
+          "name" : "manifest",
+          "type" : "String"
+        } ],
+        "offset" : 2626,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "_deploy",
+        "parameters" : [ {
+          "name" : "data",
+          "type" : "Any"
+        }, {
+          "name" : "update",
+          "type" : "Boolean"
+        } ],
+        "offset" : 2718,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "pause",
+        "parameters" : [ ],
+        "offset" : 2750,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "unpause",
+        "parameters" : [ ],
+        "offset" : 2760,
+        "returntype" : "Void",
+        "safe" : false
+      }, {
+        "name" : "isPaused",
+        "parameters" : [ ],
+        "offset" : 2779,
+        "returntype" : "Boolean",
+        "safe" : true
+      }, {
+        "name" : "getBalance",
+        "parameters" : [ {
+          "name" : "account",
+          "type" : "Hash160"
+        } ],
+        "offset" : 2790,
+        "returntype" : "Integer",
+        "safe" : true
+      }, {
+        "name" : "getFlows",
+        "parameters" : [ {
+          "name" : "account",
+          "type" : "Hash160"
+        } ],
+        "offset" : 2821,
+        "returntype" : "Array",
+        "safe" : true
+      }, {
+        "name" : "getFlows",
+        "parameters" : [ ],
+        "offset" : 2887,
+        "returntype" : "Array",
+        "safe" : true
+      }, {
+        "name" : "_initialize",
+        "parameters" : [ ],
+        "offset" : 2954,
+        "returntype" : "Void",
+        "safe" : false
+      } ],
+      "events" : [ {
+        "name" : "OnNep17Payment",
+        "parameters" : [ {
+          "name" : "arg1",
+          "type" : "Hash160"
+        }, {
+          "name" : "arg2",
+          "type" : "Integer"
+        } ]
+      }, {
+        "name" : "FlowCreated",
+        "parameters" : [ {
+          "name" : "arg1",
+          "type" : "Hash160"
+        }, {
+          "name" : "arg2",
+          "type" : "ByteArray"
+        } ]
+      }, {
+        "name" : "FlowExecuted",
+        "parameters" : [ {
+          "name" : "arg1",
+          "type" : "ByteArray"
+        }, {
+          "name" : "arg2",
+          "type" : "Hash160"
+        }, {
+          "name" : "arg3",
+          "type" : "Hash160"
+        }, {
+          "name" : "arg4",
+          "type" : "Integer"
+        } ]
+      } ]
+    },
+    "permissions" : [ {
+      "contract" : "*",
+      "methods" : "*"
+    } ],
+    "trusts" : "*",
+    "extra" : {
+      "name" : "FlowExecutor"
+    }
+  }

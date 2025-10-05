@@ -1,0 +1,57 @@
+{
+  "name": "@smartargs/n3-typegen",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Generate typed NEO N3 contract bindings",
+  "license": "MIT",
+  "bin": {
+    "n3-typegen": "./dist/cli.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --sourcemap && tsup src/cli.ts --format esm,cjs --sourcemap",
+    "sample": "node dist/cli.js --manifest sample/manifest.json --out sample/out",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest",
+    "lint": "echo \"no lint configured\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "neo",
+    "n3",
+    "typegen",
+    "codegen",
+    "smart-contracts"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@cityofzion/neon-js": "^5.7.0",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.19",
+    "tsup": "^8.2.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
