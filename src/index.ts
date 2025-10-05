@@ -121,7 +121,7 @@ function generateImplementation(
   lines.push("");
   lines.push(`export interface N3Invoker {`);
   lines.push(
-    `  invokeFunction<T>(contractHash: string, method: string, args: unknown[]): Promise<T>;`
+    `  invoke<T>(contractHash: string, method: string, args: unknown[]): Promise<T>;`
   );
   lines.push(
     `  invokeRead<T>(contractHash: string, method: string, args: unknown[]): Promise<T>;`
@@ -172,7 +172,7 @@ function generateImplementation(
     );
     const implRet = allRets.length === 1 ? allRets[0] : "unknown";
     const allSafe = variants.every((v) => Boolean((v as any).safe));
-    const invokerMethod = allSafe ? "invokeRead" : "invokeFunction";
+    const invokerMethod = allSafe ? "invokeRead" : "invoke";
     lines.push(
       `  async ${methodName}(...args: unknown[]): Promise<${implRet}> {`
     );
