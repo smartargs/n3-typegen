@@ -44,8 +44,6 @@ npx @smartargs/n3-typegen --manifest sample/manifest.json --out sample/out --nam
 npx @smartargs/n3-typegen --manifest sample/manifest.json --out sample/out --name ExampleContract --hash 0x1234 --impl
 ```
 
-Each file contains a header with contract info and a generation timestamp.
-
 ### Generated Types
 
 The `.d.ts` file declares a namespace `ExampleContract` with one function per ABI method. Duplicate ABI method names (overloads) are emitted as multiple function signatures.

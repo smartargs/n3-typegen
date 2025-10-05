@@ -35,7 +35,9 @@
     "n3",
     "typegen",
     "codegen",
-    "smart-contracts"
+    "smart-contracts",
+    "web3",
+    "typescript"
   ],
   "engines": {
     "node": ">=18"
