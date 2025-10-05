@@ -25,13 +25,13 @@ npx @smartargs/n3-typegen --manifest <path> [--out <dir>] [--name <contract>] [-
 
 - **--manifest <path>**: Path to N3 contract manifest JSON (required)
 - **--out <dir>**: Output directory (default: `src/contracts`)
-- **--name <contract>**: Override contract name (affects file/namespace/class)
+- **--name <contract>**: Override contract name (affects file/interface/class)
 - **--hash <scriptHash>**: Embed contract scripthash in generated header and client
 - **--impl**: Also emit a concrete client class using an `N3Invoker` interface
 
 Outputs:
 
-- `<Name>.d.ts`: ambient namespace with method signatures
+- `<Name>.d.ts`: `<Name>API` interface with method signatures
 - `<Name>Client.ts` (with `--impl`): client class that calls an `N3Invoker`
 
 Example:
