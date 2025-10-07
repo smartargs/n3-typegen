@@ -1,6 +1,6 @@
 {
   "name": "@smartargs/n3-typegen",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "type": "module",
   "description": "Generate typed NEO N3 contract bindings",

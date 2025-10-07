@@ -20,14 +20,23 @@ npm i -D @smartargs/n3-typegen
 ### CLI
 
 ```bash
-npx @smartargs/n3-typegen --manifest <path> [--out <dir>] [--name <contract>] [--hash <scriptHash>] [--impl]
+npx @smartargs/n3-typegen --manifest <path> [--out <dir>] [--name <contract>] [--hash <scriptHash>] [--embed-hash] [--impl]
 ```
 
 - **--manifest <path>**: Path to N3 contract manifest JSON (required)
 - **--out <dir>**: Output directory (default: `src/contracts`)
 - **--name <contract>**: Override contract name (affects file/interface/class)
-- **--hash <scriptHash>**: Embed contract scripthash in generated header and client
+- **--hash <scriptHash>**: Contract scripthash (required with `--node`); included in headers
+- **--embed-hash**: Embed contract hash into the client class (static). If omitted, the client constructor requires a `contractHash` parameter
 - **--impl**: Also emit a concrete client class using an `N3Invoker` interface
+
+Fetch manifest from a node instead of a local file:
+
+```bash
+npx @smartargs/n3-typegen --node https://mainnet1.neo.coz.io:443 --hash 0x<hash> --out src/contracts --name FromChain --impl
+# To keep constructor requiring the hash (not embedded), omit --embed-hash
+npx @smartargs/n3-typegen --node https://mainnet1.neo.coz.io:443 --hash 0x<hash> --out src/contracts --name FromChain --impl --embed-hash
+```
 
 Outputs:
 
