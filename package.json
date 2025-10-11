@@ -1,6 +1,6 @@
 {
   "name": "@smartargs/n3-typegen",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": false,
   "type": "module",
   "description": "Generate typed NEO N3 contract bindings",
@@ -37,7 +37,7 @@
     "dev": "tsx src/cli.ts",
     "test": "vitest",
     "lint": "echo \"no lint configured\"",
-    "prepublishOnly": "npm run build"
+    "publish": "npm publish --access public"
   },
   "keywords": [
     "neo",
