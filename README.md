@@ -42,6 +42,7 @@ Outputs:
 
 - `<Name>.d.ts`: `<Name>API` interface with method signatures
 - `<Name>Client.ts` (with `--impl`): client class that calls an `N3Invoker`
+- `n3-typegen-types.ts` (with `--impl`): shared types used by clients (`N3TypegenSigner`, `N3TypegenWitnessScope`)
 
 Example:
 
@@ -67,7 +68,12 @@ With `--impl`, a `ExampleContractClient` class is emitted. The class requires an
 
 ```ts
 export interface N3Invoker {
-  invoke<T>(contractHash: string, method: string, args: unknown[]): Promise<T>;
+  invoke<T>(
+    contractHash: string,
+    method: string,
+    args: unknown[],
+    signers?: N3TypegenSigner[]
+  ): Promise<T>;
   invokeRead<T>(
     contractHash: string,
     method: string,
@@ -81,12 +87,16 @@ export interface N3Invoker {
 
 ### Implementing an N3Invoker (NeoLine, Neon-JS, or custom)
 
-Implement `N3Invoker` using your preferred stack (Angular, React, Node.js, etc.). The invoker simply needs to expose `invoke` for state-changing calls and `invokeRead` for read-only calls.
+Implement `N3Invoker` using your preferred stack (Angular, React, Node.js, etc.). The invoker simply needs to expose `invoke` for state-changing calls (optionally with `signers`) and `invokeRead` for read-only calls.
 
 ```ts
 // wallet-invoker.ts
 import { sc } from "@cityofzion/neon-js"; // optional; use your own encoder if preferred
 import type { N3Invoker } from "./contracts/ExampleContractClient";
+import type {
+  N3TypegenSigner,
+  N3TypegenWitnessScope,
+} from "./contracts/n3-typegen-types";
 
 export class WalletInvoker implements N3Invoker {
   constructor(
@@ -113,12 +123,14 @@ export class WalletInvoker implements N3Invoker {
   async invoke<T>(
     contractHash: string,
     method: string,
-    args: unknown[]
+    args: unknown[],
+    signers?: N3TypegenSigner[]
   ): Promise<T> {
     const res = await this.provider.invoke({
       scriptHash: contractHash,
       operation: method,
       args: this.toParams(args),
+      signers, // if your provider supports it
     });
     return res as T;
   }
@@ -133,6 +145,19 @@ import { WalletInvoker } from "./wallet-invoker";
 
 const invoker = new WalletInvoker(neoline.n3); // or any provider exposing invoke/invokeRead
 const client = new ExampleContractClient(invoker); // or pass contract hash if not using --hash
+
+// Read (no signers):
+const total = await client.totalSupply();
+
+// Write with explicit signers:
+await client.transfer(from, to, amount, {
+  signers: [
+    {
+      account: from,
+      scopes: N3TypegenWitnessScope.CalledByEntry,
+    },
+  ],
+});
 ```
 
 ### Programmatic API
